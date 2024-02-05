@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sofia_Sans } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 export const sofia = Sofia_Sans({
@@ -19,7 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
-      <body className={`${sofia.variable} font-sans text-lg`}>{children}</body>
+      <body className={`${sofia.variable} font-sans text-lg`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
