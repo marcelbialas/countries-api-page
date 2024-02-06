@@ -7,8 +7,12 @@ export function ModeToggle() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-      toggle theme
-    </button>
+    <div>
+      {theme === "dark" ? (
+        <button onClick={() => setTheme("light")}>Light Mode</button>
+      ) : (
+        <button onClick={() => setTheme("dark")}>Dark Mode</button>
+      )}
+    </div>
   );
 }
