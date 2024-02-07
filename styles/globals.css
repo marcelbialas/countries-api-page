@@ -6,7 +6,7 @@
   :root {
     --background: 0, 0%, 98%;
     --foreground: 200, 15%, 8%;
-    --surface: 0 0%, 100%;
+    --surface: 0, 0%, 100%;
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
