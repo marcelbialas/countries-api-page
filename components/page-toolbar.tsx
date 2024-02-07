@@ -23,7 +23,7 @@ const PageToolbar = (props: Props) => {
         />
       </div>
       <div>
-        <select className="bg-input py-3 px-6 text-sm ">
+        <select className="appearance-none bg-input py-3 px-6 text-sm ">
           <option value="">Filter by Region</option>
           <option value="Africa">Africa</option>
           <option value="America">America</option>
