@@ -29,6 +29,7 @@ type Country = {
 
 export default function Countries({}: Props) {
   const [apiData, setApiData] = useState<Country[]>([]);
+  const [loading, setLoading] = useState(true);
 
   async function getData() {
     const data: Country[] = await fetch(
@@ -41,24 +42,29 @@ export default function Countries({}: Props) {
           country.name.common.includes("G") && country.region === "Europe"
       )
     );
+    setLoading(false);
   }
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [loading]);
 
   return (
     <div className="mt-12 grid gap-8 md:gap-22 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {apiData.map((country) => (
-        <CountryItem
-          key={country.name.common}
-          name={country.name.common}
-          population={country.population}
-          region={country.region}
-          capital={country.capital}
-          img={country.flags.png}
-        />
-      ))}
+      {loading ? (
+        <div> loading... </div>
+      ) : (
+        apiData.map((country) => (
+          <CountryItem
+            key={country.name.common}
+            name={country.name.common}
+            population={country.population}
+            region={country.region}
+            capital={country.capital}
+            img={country.flags.png}
+          />
+        ))
+      )}
     </div>
   );
 }
