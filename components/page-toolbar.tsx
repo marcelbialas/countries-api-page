@@ -1,17 +1,19 @@
-import React from "react";
+"use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import React, { useState } from "react";
 
-type Props = {};
+interface Props {
+  onSearchTermChange: (term: string) => void;
+}
 
 const PageToolbar = (props: Props) => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    props.onSearchTermChange(e.target.value);
+  };
+
   return (
     <div className="w-full flex flex-col gap-6 md:flex-row md:place-content-between ">
       <div>
@@ -20,10 +22,12 @@ const PageToolbar = (props: Props) => {
           name="search"
           placeholder="Search for a Country..."
           className="py-2 px-4 w-full md:w-[35vw] shadow-sm rounded placeholder:text-sm bg-input "
+          onChange={(e) => handleInputChange(e)}
+          value={searchTerm}
         />
       </div>
       <div>
-        <select className="appearance-none bg-input py-3 px-6 text-sm ">
+        <select className="appearance-none bg-input py-3 px-6 text-sm rounded">
           <option value="">Filter by Region</option>
           <option value="Africa">Africa</option>
           <option value="America">America</option>

@@ -24,7 +24,11 @@ interface Country {
   };
 }
 
-export default function Countries() {
+interface Props {
+  searchTerm: string;
+}
+
+export default function Countries(props: Props) {
   const [apiData, setApiData] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -49,26 +53,31 @@ export default function Countries() {
     getData();
   }, []);
 
-  /**
-   * #TODO: Add functionality for filtering Countries by name and region
-   */
+  const filterCountries = (data: Country[], searchTerm: string): Country[] => {
+    return data.filter((country) =>
+      country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
 
   return (
     <div className="mt-12 grid gap-8 md:gap-22 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {loading ? (
         <div> loading... </div>
       ) : (
-        apiData.map((country, index) => (
-          <CountryItem
-            key={index}
-            name={country.name.common}
-            population={country.population}
-            region={country.region}
-            capital={country.capital}
-            img={country.flags.png}
-            imgAlt={country.flags.alt}
-          />
-        ))
+        filterCountries(apiData, props.searchTerm)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 12)
+          .map((country, index) => (
+            <CountryItem
+              key={index}
+              name={country.name.common}
+              population={country.population}
+              region={country.region}
+              capital={country.capital}
+              img={country.flags.png}
+              imgAlt={country.flags.alt}
+            />
+          ))
       )}
     </div>
   );
