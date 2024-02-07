@@ -1,29 +1,45 @@
 import React from "react";
+import Image from "next/image";
 
-type Props = {
+interface Props {
   name: string;
   population: number;
   region: string;
   capital: string[];
   img: string;
-};
+  imgAlt: string;
+}
 
-const CountryItem = (props: Props) => {
+const CountryItem = ({
+  name,
+  population,
+  region,
+  capital,
+  img,
+  imgAlt,
+}: Props) => {
   return (
     <div className="w-full bg-surface pb-4">
-      <img src={props.img} className="w-full h-[200px] object-cover" />
+      <Image
+        src={img}
+        alt={imgAlt}
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="w-full h-[200px] object-cover"
+      />
       <div className="p-4">
-        <h2 className="text-2xl font-bold py-4">{props.name}</h2>
+        <h2 className="text-2xl font-bold py-4">{name}</h2>
         <p>
           <strong className="pr-2">Population:</strong>
-          {props.population}
+          {population}
         </p>
         <p>
-          <strong className="pr-2">Region:</strong> {props.region}
+          <strong className="pr-2">Region:</strong> {region}
         </p>
         <p>
           <strong className="pr-2">Capital:</strong>
-          {props.capital.map((capital) => capital)}
+          {capital.map((cap: string) => cap)}
         </p>
       </div>
     </div>
