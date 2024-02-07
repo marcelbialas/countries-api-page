@@ -53,10 +53,26 @@ export default function Countries(props: Props) {
     getData();
   }, []);
 
-  const filterCountries = (data: Country[], searchTerm: string): Country[] => {
-    return data.filter((country) =>
-      country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const filterCountries = (
+    data: Country[],
+    searchTerm: string,
+    regionSearch?: string
+  ): Country[] => {
+    let filteredData = data;
+
+    if (regionSearch) {
+      filteredData = filteredData.filter(
+        (country) => country.region === regionSearch
+      );
+    }
+
+    if (searchTerm) {
+      filteredData = filteredData.filter((country) =>
+        country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    return filteredData;
   };
 
   return (
@@ -64,7 +80,7 @@ export default function Countries(props: Props) {
       {loading ? (
         <div> loading... </div>
       ) : (
-        filterCountries(apiData, props.searchTerm)
+        filterCountries(apiData, props.searchTerm, "Europe")
           .sort(() => 0.5 - Math.random())
           .slice(0, 12)
           .map((country, index) => (

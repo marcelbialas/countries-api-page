@@ -32,7 +32,7 @@ const CountryItem = ({
         <h2 className="text-2xl font-bold py-4">{name}</h2>
         <p>
           <strong className="pr-2">Population:</strong>
-          {population}
+          {population.toLocaleString()}
         </p>
         <p>
           <strong className="pr-2">Region:</strong> {region}
