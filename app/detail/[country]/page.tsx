@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
-interface Country {
+import CountryDetail from "@/components/CountryDetail";
+
+export interface Country {
   name: {
     common: string;
     official: string;
@@ -49,7 +50,6 @@ export default function Page({ params }: { params: { country: string } }) {
 
       setApiData(data);
       setLoading(false);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -73,77 +73,7 @@ export default function Page({ params }: { params: { country: string } }) {
         <div>loading...</div>
       ) : (
         apiData.map((country, index) => (
-          <div key={index} className="flex flex-col md:flex-row gap-14">
-            <div className="w-1/3">
-              <Image
-                src={country.flags.png}
-                alt={country.flags.alt}
-                width={0}
-                height={0}
-                sizes="100%"
-                className="w-full h-[auto] object-cover"
-              />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold">{country.name.common}</h1>
-              <div>
-                <div>
-                  <span className="font-bold">Native Name: </span>
-                  {Object.keys(country.name.nativeName).map((el, index) => (
-                    <span key={index}>
-                      {country.name.nativeName[el].official}
-                    </span>
-                  ))}
-                </div>
-                <div>
-                  <span className="font-bold">
-                    Population: {country.population.toLocaleString()}
-                  </span>
-                </div>
-                <div>
-                  <span className="font-bold">Region: </span>
-                  {country.region}
-                </div>
-                <div>
-                  <span className="font-bold">Sub Region: </span>
-                  {country.subregion}
-                </div>
-                <div>
-                  <span className="font-bold">Capital: </span>
-                  {country.capital[0]}
-                </div>
-                <div>
-                  <span className="font-bold">Top Level Domain: </span>
-                  {country.tld}
-                </div>
-                <div>
-                  <span className="font-bold">Currencies: </span>
-                  {Object.keys(country.currencies).map((cur, index) => (
-                    <span key={index}>{country.currencies[cur].name}</span>
-                  ))}
-                </div>
-                <div>
-                  <span className="font-bold">Languages: </span>
-                  {Object.keys(country.languages).map((lan, index) => (
-                    <span key={index}>
-                      {country.languages[lan]}
-                      {Object.keys(country.languages).length - 1 !== index
-                        ? ", "
-                        : " "}
-                    </span>
-                  ))}
-                </div>
-                <div>
-                  {country.borders.map((borderCountry, index) => (
-                    <span key={index}>
-                      {borderCountry}
-                      {country.borders.length - 1 !== index && ", "}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <CountryDetail key={index} country={country} />
         ))
       )}
     </main>

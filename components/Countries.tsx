@@ -34,11 +34,8 @@ export default function Countries(props: Props) {
   const [apiData, setApiData] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * #TODO: Add Error handling for API call
-   */
-
   async function getData(): Promise<void> {
+    console.log("called");
     try {
       const data: Country[] = await fetch(
         "https://restcountries.com/v3.1/independent?fields=name,population,region,capital,flags"
@@ -52,8 +49,10 @@ export default function Countries(props: Props) {
   }
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (apiData.length === 0) {
+      getData();
+    }
+  }, [apiData.length]);
 
   const filterCountries = (
     data: Country[],
@@ -72,6 +71,8 @@ export default function Countries(props: Props) {
       filteredData = filteredData.filter((country) =>
         country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
       );
+      console.log(searchTerm);
+      console.log(filteredData);
     }
 
     if (filteredData.length === 0) {
@@ -85,13 +86,12 @@ export default function Countries(props: Props) {
     <div className="mt-12 grid gap-8 md:gap-22 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {loading ? (
         <div> loading... </div>
-      ) : filterCountries(apiData, props.searchTerm, "Europe").length === 0 ? (
+      ) : filterCountries(apiData, props.searchTerm, props.region).length ===
+        0 ? (
         "No matching Country"
       ) : (
-        filterCountries(apiData, props.searchTerm, props.region)
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 12)
-          .map((country, index) => (
+        filterCountries(apiData, props.searchTerm, props.region).map(
+          (country, index) => (
             <Link key={index} href={`/detail/${country.name.common}`}>
               <CountryItem
                 key={index}
@@ -103,7 +103,8 @@ export default function Countries(props: Props) {
                 imgAlt={country.flags.alt}
               />
             </Link>
-          ))
+          )
+        )
       )}
     </div>
   );
