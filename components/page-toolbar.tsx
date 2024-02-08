@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 interface Props {
   onSearchTermChange: (term: string) => void;
+  onRegionChange: (region: string) => void;
 }
 
 const PageToolbar = (props: Props) => {
@@ -12,6 +13,10 @@ const PageToolbar = (props: Props) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     props.onSearchTermChange(e.target.value);
+  };
+
+  const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    props.onRegionChange(e.target.value);
   };
 
   return (
@@ -27,7 +32,10 @@ const PageToolbar = (props: Props) => {
         />
       </div>
       <div>
-        <select className="appearance-none bg-input py-3 px-6 text-sm rounded">
+        <select
+          className="appearance-none bg-input py-3 px-6 text-sm rounded"
+          onChange={(e) => handleRegionChange(e)}
+        >
           <option value="">Filter by Region</option>
           <option value="Africa">Africa</option>
           <option value="America">America</option>

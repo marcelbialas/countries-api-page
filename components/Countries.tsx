@@ -26,6 +26,7 @@ interface Country {
 
 interface Props {
   searchTerm: string;
+  region: string;
 }
 
 export default function Countries(props: Props) {
@@ -72,6 +73,10 @@ export default function Countries(props: Props) {
       );
     }
 
+    if (filteredData.length === 0) {
+      return [];
+    }
+
     return filteredData;
   };
 
@@ -79,8 +84,10 @@ export default function Countries(props: Props) {
     <div className="mt-12 grid gap-8 md:gap-22 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {loading ? (
         <div> loading... </div>
+      ) : filterCountries(apiData, props.searchTerm, "Europe").length === 0 ? (
+        "No matching Country"
       ) : (
-        filterCountries(apiData, props.searchTerm, "Europe")
+        filterCountries(apiData, props.searchTerm, props.region)
           .sort(() => 0.5 - Math.random())
           .slice(0, 12)
           .map((country, index) => (
