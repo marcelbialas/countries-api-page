@@ -8,78 +8,78 @@ interface Props {
 
 export default function CountryDetail(props: Props) {
   return (
-    <div className="flex flex-col md:flex-row gap-14">
-      <div className="w-1/3">
+    <div className="flex flex-col xl:flex-row gap-6">
+      <div className="w-full lg:w-1/2 mr-6">
         <Image
           src={props.country.flags.png}
           alt={props.country.flags.alt}
-          width={0}
-          height={0}
-          sizes="100%"
-          className="w-full h-[auto] object-cover"
+          width="0"
+          height="0"
+          sizes="100vw"
+          className="w-full h-auto"
         />
       </div>
-      <div>
-        <h1 className="text-3xl font-bold">{props.country.name.common}</h1>
-        <div>
-          <div>
-            <span className="font-bold">Native Name: </span>
-            {Object.keys(props.country.name.nativeName).map((el, index) => (
-              <span key={index}>
-                {props.country.name.nativeName[el].official}
-              </span>
-            ))}
+      <div className="lg:px-6 w-full lg:w-1/2">
+        <h1 className="text-4xl font-bold mb-4">{props.country.name.common}</h1>
+        <div className="flex flex-wrap">
+          <div className="basis-full gap:3 md:basis-3/5 flex-shrink">
+            <div className="pb-2">
+              <span className="font-bold">Native Name: </span>
+              {props.country.name.common}
+            </div>
+            <div className="pb-2">
+              <span className="font-bold">Population: </span>
+              {props.country.population.toLocaleString()}
+            </div>
+            <div className="pb-2">
+              <span className="font-bold">Region: </span>
+              {props.country.region}
+            </div>
+            <div className="pb-2">
+              <span className="font-bold">Sub Region: </span>
+              {props.country.subregion}
+            </div>
+            <div className="pb-2">
+              <span className="font-bold">Capital: </span>
+              {props.country.capital[0]}
+            </div>
           </div>
-          <div>
-            <span className="font-bold">
-              Population: {props.country.population.toLocaleString()}
-            </span>
-          </div>
-          <div>
-            <span className="font-bold">Region: </span>
-            {props.country.region}
-          </div>
-          <div>
-            <span className="font-bold">Sub Region: </span>
-            {props.country.subregion}
-          </div>
-          <div>
-            <span className="font-bold">Capital: </span>
-            {props.country.capital[0]}
-          </div>
-          <div>
-            <span className="font-bold">Top Level Domain: </span>
-            {props.country.tld}
-          </div>
-          <div>
-            <span className="font-bold">Currencies: </span>
-            {Object.keys(props.country.currencies).map((cur, index) => (
-              <span key={index}>
-                {props.country.currencies[cur].name} (
-                {props.country.currencies[cur].symbol})
-              </span>
-            ))}
-          </div>
-          <div>
-            <span className="font-bold">Languages: </span>
-            {Object.keys(props.country.languages).map((lan, index) => (
-              <span key={index}>
-                {props.country.languages[lan]}
-                {Object.keys(props.country.languages).length - 1 !== index
-                  ? ", "
-                  : " "}
-              </span>
-            ))}
-          </div>
-          <div>
-            {props.country.borders &&
-              props.country.borders.map((borderCountry, index) => (
+          <div className="basis-full gap:3 md:basis-2/5 flex-shrink">
+            <div className="pb-2">
+              <span className="font-bold">Top Level Domain: </span>
+              {props.country.tld}
+            </div>
+            <div className="pb-2">
+              <span className="font-bold">Currencies: </span>
+              {Object.keys(props.country.currencies).map((cur, index) => (
                 <span key={index}>
-                  {borderCountry}
-                  {props.country.borders.length - 1 !== index && ", "}
+                  {props.country.currencies[cur].name} (
+                  {props.country.currencies[cur].symbol})
                 </span>
               ))}
+            </div>
+            <div className="pb-2">
+              <span className="font-bold">Languages: </span>
+              {Object.keys(props.country.languages).map((lan, index) => (
+                <span key={index}>
+                  {props.country.languages[lan]}
+                  {Object.keys(props.country.languages).length - 1 !== index
+                    ? ", "
+                    : " "}
+                </span>
+              ))}
+            </div>
           </div>
+        </div>
+        <div className="pt-10 lg:pt-20">
+          <h2 className="font-bold">Border Countries: </h2>
+          {props.country.borders &&
+            props.country.borders.map((borderCountry, index) => (
+              <span key={index}>
+                {borderCountry}
+                {props.country.borders.length - 1 !== index && ", "}
+              </span>
+            ))}
         </div>
       </div>
     </div>

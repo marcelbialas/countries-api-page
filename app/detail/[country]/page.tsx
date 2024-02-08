@@ -61,7 +61,7 @@ export default function Page({ params }: { params: { country: string } }) {
 
   return (
     <main className="min-h-screen bg-background py-8 px-4 md:py-10 md:px-20">
-      <div className="pb-12">
+      <div className="pb-6">
         <Link href="/">
           <Button className="flex items-center gap-3 px-6">
             <ArrowLeft size={16} />
