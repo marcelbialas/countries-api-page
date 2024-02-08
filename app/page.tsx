@@ -9,7 +9,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [region, setRegion] = useState<string>("");
 
-  const handleSearchTermChange = (term: string) => {
+  const handleSearchTermChange = (term: string): void => {
     setSearchTerm(term);
   };
 

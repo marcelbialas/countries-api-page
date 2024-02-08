@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import CountryItem from "./CountryItem";
+import Link from "next/link";
 
 interface Country {
   capital: string[];
@@ -91,15 +92,17 @@ export default function Countries(props: Props) {
           .sort(() => 0.5 - Math.random())
           .slice(0, 12)
           .map((country, index) => (
-            <CountryItem
-              key={index}
-              name={country.name.common}
-              population={country.population}
-              region={country.region}
-              capital={country.capital}
-              img={country.flags.png}
-              imgAlt={country.flags.alt}
-            />
+            <Link key={index} href={`/detail/${country.name.common}`}>
+              <CountryItem
+                key={index}
+                name={country.name.common}
+                population={country.population}
+                region={country.region}
+                capital={country.capital}
+                img={country.flags.png}
+                imgAlt={country.flags.alt}
+              />
+            </Link>
           ))
       )}
     </div>
