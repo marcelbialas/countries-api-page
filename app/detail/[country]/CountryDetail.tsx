@@ -1,12 +1,24 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Country } from "@/app/detail/[country]/page";
+import Link from "next/link";
 
 interface Props {
   country: Country;
+  getBorders: (borderArr: string[]) => Promise<string[]>;
 }
 
 export default function CountryDetail(props: Props) {
+  const [borderCountries, setBorderCountries] = useState<string[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const borders = await props.getBorders(props.country.borders);
+      setBorderCountries(borders);
+    };
+    fetchData();
+  }, [props.country.borders, props]);
   return (
     <div className="flex flex-col lg:flex-row gap-6">
       <div className="w-full lg:w-1/2 mr-6">
@@ -73,12 +85,13 @@ export default function CountryDetail(props: Props) {
         </div>
         <div className="pt-10 lg:pt-20">
           <h2 className="font-bold">Border Countries: </h2>
-          {props.country.borders &&
-            props.country.borders.map((borderCountry, index) => (
-              <span key={index}>
-                {borderCountry}
-                {props.country.borders.length - 1 !== index && ", "}
-              </span>
+          {borderCountries.length > 0 &&
+            borderCountries.slice(0, 3).map((country, index) => (
+              <Link key={index} href={`/detail/${country}`}>
+                <button className="bg-primary hover:bg-yellow-500 text-yellow-900 text-sm font-bold py-2 px-4 rounded-full mr-3">
+                  {country}
+                </button>
+              </Link>
             ))}
         </div>
       </div>

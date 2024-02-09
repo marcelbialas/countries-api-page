@@ -1,10 +1,11 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-import CountryDetail from "@/components/CountryDetail";
+import CountryDetail from "@/app/detail/[country]/CountryDetail";
 
 export interface Country {
   name: {
@@ -55,6 +56,27 @@ export default function Page({ params }: { params: { country: string } }) {
     }
   }
 
+  async function fetchBorderCountries(borderArr: string[]): Promise<string[]> {
+    let borderCountriesFull: string[] = [];
+
+    try {
+      await Promise.all(
+        borderArr.map(async (item) => {
+          const response = await fetch(
+            `https://restcountries.com/v3.1/alpha/${item}?fields=name`
+          );
+          const data = await response.json();
+          borderCountriesFull.push(data.name.common);
+        })
+      );
+
+      return borderCountriesFull;
+    } catch (error) {
+      console.error("Error fetching border countries:", error);
+      return []; // Return empty array or handle error accordingly
+    }
+  }
+
   useEffect(() => {
     getCountryData();
   }, []);
@@ -73,7 +95,11 @@ export default function Page({ params }: { params: { country: string } }) {
         <div>loading...</div>
       ) : (
         apiData.map((country, index) => (
-          <CountryDetail key={index} country={country} />
+          <CountryDetail
+            key={index}
+            country={country}
+            getBorders={fetchBorderCountries}
+          />
         ))
       )}
     </main>
