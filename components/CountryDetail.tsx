@@ -8,7 +8,7 @@ interface Props {
 
 export default function CountryDetail(props: Props) {
   return (
-    <div className="flex flex-col xl:flex-row gap-6">
+    <div className="flex flex-col lg:flex-row gap-6">
       <div className="w-full lg:w-1/2 mr-6">
         <Image
           src={props.country.flags.png}
