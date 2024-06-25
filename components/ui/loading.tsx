@@ -4,7 +4,7 @@ interface Props {}
 
 export default function Loading(props: Props) {
   return (
-    <div className="w-[95vw] h-[65vh] flex items-center justify-center">
+    <div className="w-[100vw] h-[65vh] flex items-center justify-center">
       <svg
         aria-hidden="true"
         className="w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 dark:fill-white fill-gray-800"

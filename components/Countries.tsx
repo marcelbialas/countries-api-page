@@ -29,6 +29,9 @@ interface Country {
 interface Props {
   searchTerm: string;
   region: string;
+  page: number;
+  pageSize: number;
+  onTotalCountChange: (totalCount: number) => void;
 }
 
 export default function Countries(props: Props) {
@@ -43,6 +46,7 @@ export default function Countries(props: Props) {
       ).then((res) => res.json());
 
       setApiData(data);
+      props.onTotalCountChange(data.length);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -83,29 +87,52 @@ export default function Countries(props: Props) {
     return filteredData;
   };
 
+  const paginatedCountries = (
+    data: Country[],
+    page: number,
+    pageSize: number
+  ): Country[] => {
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    return data.slice(start, end);
+  };
+
+  useEffect(() => {
+    const filteredData = filterCountries(
+      apiData,
+      props.searchTerm,
+      props.region
+    );
+    props.onTotalCountChange(filteredData.length);
+  }, [props.searchTerm, props.region, apiData, props.onTotalCountChange]);
+
+  const filteredData = filterCountries(apiData, props.searchTerm, props.region);
+  const paginatedData = paginatedCountries(
+    filteredData,
+    props.page,
+    props.pageSize
+  );
+
   return (
     <div className="mt-12 grid gap-8 md:gap-22 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {loading ? (
         <Loading />
-      ) : filterCountries(apiData, props.searchTerm, props.region).length ===
-        0 ? (
+      ) : filteredData.length === 0 ? (
         "No matching Country"
       ) : (
-        filterCountries(apiData, props.searchTerm, props.region).map(
-          (country, index) => (
-            <Link key={index} href={`/detail/${country.name.common}`}>
-              <CountryItem
-                key={index}
-                name={country.name.common}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-                img={country.flags.png}
-                imgAlt={country.flags.alt}
-              />
-            </Link>
-          )
-        )
+        paginatedData.map((country, index) => (
+          <Link key={index} href={`/detail/${country.name.common}`}>
+            <CountryItem
+              key={index}
+              name={country.name.common}
+              population={country.population}
+              region={country.region}
+              capital={country.capital}
+              img={country.flags.png}
+              imgAlt={country.flags.alt}
+            />
+          </Link>
+        ))
       )}
     </div>
   );
