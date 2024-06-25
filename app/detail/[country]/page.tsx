@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 import CountryDetail from "@/app/detail/[country]/CountryDetail";
+import Loading from "@/components/ui/loading";
 
 export interface Country {
   name: {
@@ -92,7 +93,7 @@ export default function Page({ params }: { params: { country: string } }) {
         </Link>
       </div>
       {loading ? (
-        <div>loading...</div>
+        <Loading />
       ) : (
         apiData.map((country, index) => (
           <CountryDetail

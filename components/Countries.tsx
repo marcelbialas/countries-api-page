@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import CountryItem from "./CountryItem";
 import Link from "next/link";
+import Loading from "./ui/loading";
 
 interface Country {
   capital: string[];
@@ -85,7 +86,7 @@ export default function Countries(props: Props) {
   return (
     <div className="mt-12 grid gap-8 md:gap-22 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {loading ? (
-        <div> loading... </div>
+        <Loading />
       ) : filterCountries(apiData, props.searchTerm, props.region).length ===
         0 ? (
         "No matching Country"
