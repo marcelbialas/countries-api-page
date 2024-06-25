@@ -23,7 +23,9 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   function saveCurrentPageToLocalStorage(page: number) {
-    window.localStorage.setItem("currentPage", JSON.stringify(page));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("currentPage", JSON.stringify(page));
+    }
   }
 
   return (

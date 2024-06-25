@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={`${sofia.variable} font-sans text-lg`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

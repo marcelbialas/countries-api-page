@@ -85,14 +85,17 @@ export default function CountryDetail(props: Props) {
         </div>
         <div className="pt-10 lg:pt-20">
           <h2 className="font-bold">Border Countries: </h2>
-          {borderCountries.length > 0 &&
-            borderCountries.slice(0, 3).map((country, index) => (
-              <Link key={index} href={`/detail/${country}`}>
-                <button className="bg-primary hover:bg-yellow-500 text-yellow-900 text-sm font-bold py-2 px-4 rounded-full mr-3">
-                  {country}
-                </button>
-              </Link>
-            ))}
+          <div className="flex flex-row gap-3 w-full flex-wrap">
+            {borderCountries.length > 0
+              ? borderCountries.map((country, index) => (
+                  <Link key={index} href={`/detail/${country}`}>
+                    <button className="bg-primary hover:bg-yellow-500 text-yellow-900 text-sm font-bold py-2 px-4 rounded-full">
+                      {country}
+                    </button>
+                  </Link>
+                ))
+              : "No Border Countries"}
+          </div>
         </div>
       </div>
     </div>
