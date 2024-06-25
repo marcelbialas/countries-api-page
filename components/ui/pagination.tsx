@@ -18,11 +18,16 @@ const Pagination: React.FC<PaginationProps> = ({
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       onPageChange(page);
+      saveCurrentPageToLocalStorage(page);
     }
   };
 
+  function saveCurrentPageToLocalStorage(page: number) {
+    localStorage.setItem("currentPage", JSON.stringify(page));
+  }
+
   return (
-    <nav className="flex justify-end items-center gap-x-1 mt-6">
+    <nav className="flex md:justify-end items-center gap-x-1 mt-6 overflow-x-auto">
       <button
         type="button"
         className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
