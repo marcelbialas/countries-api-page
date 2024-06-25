@@ -74,7 +74,7 @@ export default function Page({ params }: { params: { country: string } }) {
       return borderCountriesFull;
     } catch (error) {
       console.error("Error fetching border countries:", error);
-      return []; // Return empty array or handle error accordingly
+      return [];
     }
   }
 
@@ -83,15 +83,7 @@ export default function Page({ params }: { params: { country: string } }) {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background py-8 px-4 md:py-10 md:px-20">
-      <div className="pb-6">
-        <Link href="/">
-          <Button className="flex items-center gap-3 px-6">
-            <ArrowLeft size={16} />
-            Back
-          </Button>
-        </Link>
-      </div>
+    <>
       {loading ? (
         <Loading />
       ) : (
@@ -103,6 +95,6 @@ export default function Page({ params }: { params: { country: string } }) {
           />
         ))
       )}
-    </main>
+    </>
   );
 }

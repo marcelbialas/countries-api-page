@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./../styles/globals.css";
 import PageHeader from "@/components/page-header";
 
-export const sofia = Sofia_Sans({
+const sofia = Sofia_Sans({
   subsets: ["latin"],
   variable: "--font-sofia",
 });
