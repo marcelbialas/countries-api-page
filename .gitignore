@@ -37,3 +37,7 @@ next-env.d.ts
 
 #other
 .vscode
+.firebase
+.github
+.eslintrc.json
+pnpm-lock.yaml

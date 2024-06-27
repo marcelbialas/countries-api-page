@@ -15,7 +15,7 @@ export default function Home() {
       return savedPage;
     }
   });
-  const [pageSize, setPageSize] = useState<number>(24);
+  const [pageSize, setPageSize] = useState<number>(33);
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const handleSearchTermChange = (term: string): void => {
